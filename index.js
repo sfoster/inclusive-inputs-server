@@ -19,13 +19,15 @@ io.on('connection', function(client){
       client.emit('messages', 'Hello from server');
   });
 
-  client.on('keypress', function(data) {
-      console.log(data);
+  client.on('keypress', function(msg) {
+      console.log(msg);
       // TODO: sort input into channels?
       client.emit('messages', 'acknowledged keypress');
       io.emit('input', {
+        clientid: msg.clientid,
         type: 'keypress',
-        value: data
+        value: msg.value,
+        timestamp: msg.timestamp
       });
   });
 

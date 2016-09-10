@@ -42,7 +42,11 @@
         case 39:
         case 40:
           console.log('sending key: ', evt.keyCode);
-          this.socket.emit('keypress', evt.keyCode);
+          this.socket.emit('keypress', {
+            clientid: 'somebrowser',
+            value: evt.keyCode,
+            timestamp: Date.now()
+          });
           // Also update locally as we won't get our own event?
           // renderer.frameState.colorInput = evt.keyCode;
           break;
