@@ -21,12 +21,12 @@
   <script src="/socket.io/socket.io.js"></script>
   <script src="/js/processing.js"></script>
   <script src="/js/render.js"></script>
+  <script src="/js/config.js"></script>
   <script src="/js/app.js"></script>
   <script type="text/javascript">
    "use strict";
-
   console.log('connecting with socket.io');
-  var socket = io.connect('http://localhost:4200');
+  var socket = io.connect(config.socketHost);
 
   socket.on('connect', function(data) {
     socket.emit('join', 'Hello World from client');
