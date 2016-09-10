@@ -24,6 +24,9 @@
 
 console.log('connecting with socket.io');
 var socket = io();
+socket.on('connect', function(data) {
+  socket.emit('join', 'Hello World from client');
+});
 console.log('/connecting with socket.io');
 
 </script>

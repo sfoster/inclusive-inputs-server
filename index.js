@@ -11,5 +11,11 @@ var io = require('socket.io')(server);
 // app.use(cors());
 app.use(express.static(path.join(__dirname, './public')));
 
+io.on('connection', function(socket){
+  console.log('a user connected');
+});
+
 console.log('listening on port: ' + config.port);
-server.listen(config.port);
+server.listen(config.port, function() {
+    console.log('listening on *:' + config.port);
+});
