@@ -11,8 +11,24 @@ var io = require('socket.io')(server);
 // app.use(cors());
 app.use(express.static(path.join(__dirname, './public')));
 
-io.on('connection', function(socket){
+io.on('connection', function(client){
   console.log('a user connected');
+
+  client.on('join', function(data) {
+      // console.log(data);
+      client.emit('messages', 'Hello from server');
+  });
+
+  client.on('keypress', function(data) {
+      console.log(data);
+      // TODO: sort input into channels?
+      client.emit('messages', 'acknowledged keypress');
+      io.emit('input', {
+        type: 'keypress',
+        value: data
+      });
+  });
+
 });
 
 console.log('listening on port: ' + config.port);

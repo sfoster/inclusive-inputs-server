@@ -16,18 +16,31 @@
 </head>
 <body>
   <h1>48 Hour Launch / Inclusive Inputs</h1>
+  <canvas width=800 height=600></canvas>
 
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/processing.js"></script>
+  <script src="/js/render.js"></script>
+  <script src="/js/app.js"></script>
+  <script type="text/javascript">
+   "use strict";
 
-<script src="/socket.io/socket.io.js"></script>
-<script type="text/javascript">
- "use strict";
+  console.log('connecting with socket.io');
+  var socket = io.connect('http://localhost:4200');
 
-console.log('connecting with socket.io');
-var socket = io();
-socket.on('connect', function(data) {
-  socket.emit('join', 'Hello World from client');
-});
-console.log('/connecting with socket.io');
+  socket.on('connect', function(data) {
+    socket.emit('join', 'Hello World from client');
+    app.init({
+      canvasNode: document.querySelector("canvas"),
+      socket: socket
+    });
+    console.log('connected with socket.io');
 
-</script>
+    socket.on('disconnect', function(){
+      console.log('user disconnected');
+      app.uninit();
+    });
+  });
+
+  </script>
 </body></html>
