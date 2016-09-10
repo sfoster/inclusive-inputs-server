@@ -20,7 +20,7 @@ io.on('connection', function(client){
   });
 
   client.on('keypress', function(msg) {
-      console.log(msg);
+      console.log('KEYPRESS_EVENT', msg);
       // TODO: sort input into channels?
       client.emit('messages', 'acknowledged keypress');
       io.emit('input', {
