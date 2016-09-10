@@ -20,7 +20,11 @@
 
   <script src="/socket.io/socket.io.js"></script>
   <script src="/js/processing.js"></script>
-  <script src="/js/render.js"></script>
+  <script src="/js/user.js"></script>
+  <script src="/js/scene.js"></script>
+  <script src="/js/sprite.js"></script>
+  <script src="/js/rectangle.js"></script>
+
   <script src="/js/config.js"></script>
   <script src="/js/app.js"></script>
   <script type="text/javascript">
@@ -32,7 +36,8 @@
     socket.emit('join', 'Hello World from client');
     app.init({
       canvasNode: document.querySelector("canvas"),
-      socket: socket
+      socket: socket,
+      user: Object.create(User).init('fake-user')
     });
     console.log('connected with socket.io');
 

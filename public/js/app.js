@@ -1,4 +1,5 @@
 (function(global) {
+   "use strict";
 
   var SHOW_MESSAGES = false;
 
@@ -7,17 +8,44 @@
       console.log('init');
       this.socket = config.socket;
       this.canvasNode = config.canvasNode;
+      var user = this.user = config.user;
 
       this.socket.on('input', function(evt) {
         console.log('got input socket event: ', evt);
         // update state for rendering
 
-        switch (evt.type) {
-          case 'keypress':
-            renderer.frameState.colorInput = evt.value;
-            break;
-          default:
-            console.log('no handler for input type: ', evt);
+        // get the user
+        // get the current entity they are manipulating
+        var entity = user.currentEntity;
+        if (!entity) {
+          console.log('User has no currentEntity');
+          return;
+        }
+        if (evt.type === 'keypress') {
+          switch (evt.value) {
+            // left
+            case 37: // left
+            case 65: // 'a'
+              entity.previousAttribute();
+              break;
+            // right
+            case 39: // right
+            case 68: // 'd'
+              entity.nextAttribute();
+              break;
+            // up
+            case 38: // up
+            case 87: // 'w'
+              entity.incrementAttribute();
+              break;
+            // down
+            case 40: // left
+            case 83: // 'a'
+              entity.decrementAttribute();
+              break;
+          }
+        } else {
+          console.log('no handler for input type: ', evt);
         }
       });
 
@@ -29,7 +57,12 @@
       this.handleKeyUp = this.handleKeyUp.bind(this);
       window.addEventListener('keyup', this.handleKeyUp);
 
-      var processingInstance = new Processing(this.canvasNode, renderer.init.bind(renderer));
+      var processingInstance = new Processing(this.canvasNode, scene.init.bind(scene));
+
+      // prepare the scene
+      var rect = Object.create(Rectangle);
+      scene.addEntity(rect).init({}, scene);
+      user.currentEntity = scene.getNextEntity();
     },
     uninit: function() {
       window.removeEventListener('keyup', this.handleKeyUp);
@@ -43,8 +76,6 @@
           value: evt.keyCode,
           timestamp: Date.now()
         });
-        // Also update locally as we won't get our own event?
-        // renderer.frameState.colorInput = evt.keyCode;
       }
     }
   };
