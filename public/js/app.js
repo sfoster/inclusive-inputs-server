@@ -36,20 +36,15 @@
     },
 
     handleKeyUp: function(evt) {
-      switch (evt.keyCode) {
-        case 37:
-        case 38:
-        case 39:
-        case 40:
-          console.log('sending key: ', evt.keyCode);
-          this.socket.emit('keypress', {
-            clientid: 'somebrowser',
-            value: evt.keyCode,
-            timestamp: Date.now()
-          });
-          // Also update locally as we won't get our own event?
-          // renderer.frameState.colorInput = evt.keyCode;
-          break;
+      if(evt.keyCode >= 32) {
+        console.log('sending key: ', evt.keyCode);
+        this.socket.emit('keypress', {
+          clientid: 'somebrowser',
+          value: evt.keyCode,
+          timestamp: Date.now()
+        });
+        // Also update locally as we won't get our own event?
+        // renderer.frameState.colorInput = evt.keyCode;
       }
     }
   };

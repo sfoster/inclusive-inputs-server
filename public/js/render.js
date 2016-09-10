@@ -6,10 +6,25 @@
     processing: null,
     init: function(processing) {
       this.processing = processing;
+      // arrow keys
       COLORS[37] = processing.color(255, 153, 51);
       COLORS[38] = processing.color(255, 0, 0);
       COLORS[39] = processing.color(0, 255, 0);
       COLORS[40] = processing.color(255, 255, 51);
+
+      // Ww
+      COLORS[119] = processing.color(255, 0, 0);
+      COLORS[87] = processing.color(255, 0, 0);
+      // Aa
+      COLORS[97] = processing.color(255, 153, 51);
+      COLORS[65] = processing.color(255, 153, 51);
+      // Ss
+      COLORS[115] = processing.color(255, 255, 51);
+      COLORS[83] = processing.color(255, 255, 51);
+      // Dd
+      COLORS[100] = processing.color(0, 255, 0);
+      COLORS[68] = processing.color(0, 255, 0);
+
       COLORS.grey = processing.color(100,100,100);
 
       this.frameState.color = COLORS.grey;
